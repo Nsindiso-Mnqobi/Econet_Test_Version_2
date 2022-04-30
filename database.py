@@ -1,7 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-
 # Create a flask instance
 app = Flask(__name__)
 # Add Database
@@ -26,5 +25,4 @@ class Users(db.Model):
         return "<Users %r>" % self.area
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
+

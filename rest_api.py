@@ -2,7 +2,7 @@ from email import message
 from re import S
 from flask import Flask
 from database import Users, db, app
-from flask_restful import Resource, Api, reqparse, abort
+from flask_restx import Resource, Api, reqparse, abort, fields
 
 # Instantiate API 
 api = Api(app)
@@ -11,20 +11,26 @@ api = Api(app)
 Area = ""
 Shop = ""
 
-# Create Parser
+# Create Parser for delete and Post request
 parser = reqparse.RequestParser()
 parser.add_argument('Area',required=True,
                                 help="Area cannot be blank!")
 parser.add_argument('Shop',required=True,
                                 help="Shop cannot be blank!")
 
+# Create Parser for GET Request 
 parser_2 = reqparse.RequestParser()
 parser_2.add_argument('Area',required=True,
                                 help="Area cannot be blank!")
 
+Area = api.model('Area' , {'Area' : fields.String('Harare CBD')})
+Shop = api.model('Shop' , {'Area' : fields.String('Harare CBD') , 'Shop' : fields.String('Joina')})
 
-
+# Create Class 
 class Location(Resource):
+
+    # Get Request 
+    @api.expect(Area)
     def get(self):
         args = parser_2.parse_args()
         Area = args['Area']
@@ -39,6 +45,8 @@ class Location(Resource):
                 abort(201,message=" No Shops in this area")
         return { "Shops" : shop_list}
 
+    # Put Request
+    @api.expect(Shop) 
     def put(self):
             args = parser.parse_args()
             Area = args['Area']
@@ -48,6 +56,8 @@ class Location(Resource):
             db.session.commit()
             return { "Area" : Area, "Shop" : Shop}
     
+    # Delete Request 
+    @api.expect(Shop)
     def delete(self):
             args = parser.parse_args()
             Area = args['Area']
