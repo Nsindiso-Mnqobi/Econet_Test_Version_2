@@ -19,6 +19,7 @@ class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     area = db.Column(db.String(100), unique=True, nullable=False)
     shop = db.Column(db.String(200), unique=True, nullable=False)
+    
 
     # Create A string
     def __repr__(self):
