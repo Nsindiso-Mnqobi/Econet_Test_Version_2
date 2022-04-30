@@ -17,6 +17,7 @@ parser.add_argument("Shop", required=True, help="Shop cannot be blank!")
 parser_2 = reqparse.RequestParser()
 parser_2.add_argument("Area", required=True, help="Area cannot be blank!")
 
+# Create API Models
 Area = api.model("Area", {"Area": fields.String("Harare CBD")})
 Shop = api.model(
     "Shop",
@@ -29,7 +30,7 @@ class Location(Resource):
 
     # Get Request
     @api.expect(Area)
-    def get(self):
+    def get(self,):
         args = parser_2.parse_args()
         Area = args["Area"]
         shop_list = []
@@ -37,7 +38,7 @@ class Location(Resource):
         for shop in Shops:
             if shop.area == Area:
                 shop_list.append(shop.shop)
-            elif shop.area == None:
+            elif shop.area is None:
                 abort(404, message="The area is not avalaible in the system")
             else:
                 abort(201, message=" No Shops in this area")
@@ -65,7 +66,7 @@ class Location(Resource):
         return {"Area": Area, "Deleted Shop": Shop}
 
 
-api.add_resource(Location, "/location")
+api.add_resource(Location, "/location/")
 
 if __name__ == "__main__":
     app.run(debug=True)
