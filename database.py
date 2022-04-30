@@ -7,7 +7,7 @@ app = Flask(__name__)
 # Add Database
 app.config[
     "SQLALCHEMY_DATABASE_URI"
-] = "mysql://root:root@172.17.0.2:3306/Area"
+] = "mysql://root:root@172.17.0.3:3306/Area"
 
 # Intilaize The Database
 db = SQLAlchemy(app)
@@ -17,7 +17,7 @@ db = SQLAlchemy(app)
 class Users(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    area = db.Column(db.String(100), unique=True, nullable=False)
+    area = db.Column(db.String(100), unique=False, nullable=False)
     shop = db.Column(db.String(200), unique=True, nullable=False)
     
 

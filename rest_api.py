@@ -1,7 +1,8 @@
+from email import message
 from re import S
 from flask import Flask
 from database import Users, db, app
-from flask_restful import Resource, Api, reqparse
+from flask_restful import Resource, Api, reqparse, abort
 
 # Instantiate API 
 api = Api(app)
@@ -27,15 +28,16 @@ class Location(Resource):
     def get(self):
         args = parser_2.parse_args()
         Area = args['Area']
-        Shops = Users.query.filter_by(area=Area).first()
-        if Area == Shops.area:
-            for shops in Shops.shops:
-                return { "Shops" : shops}
-        elif Area != Shops.area and Shops == None:
-            return "The area is not avalaible in the system"
-        else: 
-            return "No Shops in this area"
-
+        shop_list = []
+        Shops = Users.query.filter_by(area=Area).all()
+        for shop in Shops:
+            if shop.area == Area:
+                shop_list.append(shop.shop)
+            elif Area != shop.area and shop.area == None:
+                abort(404, message= "The area is not avalaible in the system")
+            else: 
+                abort(201,message=" No Shops in this area")
+        return { "Shops" : shop_list}
 
     def put(self):
             args = parser.parse_args()
@@ -50,10 +52,9 @@ class Location(Resource):
             args = parser.parse_args()
             Area = args['Area']
             Shop = args['Shop']
-            data = Users(area =Area, shop=Shop)
-            db.session.delete(data)
+            to_delete = Users.query.filter_by(shop=Shop).delete()
             db.session.commit()
-            return { "Area" : Area, "Shop" : Shop}
+            return { "Area" : Area, "Deleted Shop" : Shop}
 
 api.add_resource(Location, '/location')
 
