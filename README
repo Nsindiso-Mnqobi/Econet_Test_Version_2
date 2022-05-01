@@ -1,0 +1,16 @@
+                                                                                                                GET REQUSTS
+nsindiso@ubuntu:~$ curl -X 'GET'   'http://127.0.0.1:5000/location/'  -H 'accept: application/json'  -H 'Content-Type: application/json'  -d '{ "Area": "Harare CBD" }'
+{
+    "Shops": [
+        "Econet First Street",
+        "Econet Joina City"
+    ]
+}
+
+                                                                                                                    PUT REQUSTS
+
+curl -X 'PUT'  'http://127.0.0.1:5000/location/'  -H 'accept: application/json'   -H 'Content-Type: application/json'   -d ' {  "Area": "Harare CBD", "Shop": "Joina" }
+{
+  "Area": "Harare CBD",
+  "Shop": "Joina"
+}
