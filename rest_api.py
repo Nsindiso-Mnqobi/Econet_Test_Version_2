@@ -24,7 +24,6 @@ Shop = api.model(
     {"Area": fields.String("Harare CBD"), "Shop": fields.String("Joina")},
 )
 
-
 # Create Class
 class Location(Resource):
 
