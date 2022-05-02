@@ -6,7 +6,7 @@ app = Flask(__name__)
 # Add Database
 app.config[
     "SQLALCHEMY_DATABASE_URI"
-] = "mysql://root:root@172.17.0.3:3306/Area"
+] = "mysql://root:root@mysql-start:3306/Area"
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
