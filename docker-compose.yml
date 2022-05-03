@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+    db:
+    image: mysql
+    container_name: mysql-start
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=Area
+      - MYSQL_USER=Nsindiso
+      - MYSQL_PASSWORD=Bulawayo
+    volumes:
+      - mysql-dB:/var/lib/mysql
+  web:
+    build: .  
+    ports:
+      - "8000:5000"
+    environment:
+      FLASK_ENV: development
