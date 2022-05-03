@@ -1,7 +1,6 @@
 FROM mnqobi94/ecocontainer
+ADD . /usr/src/myapp
 WORKDIR /usr/src/myapp
-ENV FLASK_APP=app.py
-ENV FLASK_RUN_HOST=0.0.0.0
 EXPOSE 5000
-RUN python database.py
-CMD ["flask", "run"]
+ENV FLASK_APP=rest_api.py
+CMD ["flask","run","--host=0.0.0.0"]

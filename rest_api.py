@@ -64,6 +64,11 @@ class Location(Resource):
         db.session.commit()
         return {"Area": Area, "Deleted Shop": Shop}
 
+    # Post Request to create database
+    def post(self):
+        db.create_all()
+        return "Database has been created"
+
 
 api.add_resource(Location, "/location/")
 
